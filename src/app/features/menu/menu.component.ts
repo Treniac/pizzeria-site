@@ -3,12 +3,13 @@ import { Component, inject } from '@angular/core';
 import Pizza from '../../models/pizza.model';
 
 import { CommonModule } from '@angular/common';
+import { CardComponent } from "../../components/card/pizza-card.component";
 
 @Component({
   selector: 'app-menu',
-  imports: [CommonModule],
+  imports: [CommonModule, CardComponent],
   template: `
-    <pre>{{pizzas | json}}</pre>
+    <app-card *ngFor="let pizza of pizzas" [pizza]="pizza"/>
   `,
   styles: ``
 })
