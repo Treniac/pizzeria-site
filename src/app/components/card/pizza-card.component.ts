@@ -1,20 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input, Output } from '@angular/core';
 import Pizza from '../../models/pizza.model';
+import { PizzaService } from '../../../../services/pizza.service';
 
 @Component({
   selector: 'app-card',
   imports: [CommonModule],
   template: `
     <div class="card" style="width: 18rem;">
-      <img [src]="pizza?.image" class="card-img-top"/>
+      <img [src]="pizza?.image" class="card-img-top" />
       <div class="card-body">
-        <h5 class="card-title">Card title</h5>
+        <h5 class="card-title">{{ pizza?.name }}</h5>
         <p class="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card’s content.
+          {{ pizza?.description }}
         </p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <div>
+          <button class="btn btn-primary" (click)="pizzaService.incrementPizzas(pizza!.id)">+</button>
+          <p>{{pizza?.quantity}}</p>
+          <button class="btn btn-danger" (click)="pizzaService.decrementPizzas(pizza!.id)">-</button>
+        </div>
       </div>
     </div>
   `,
@@ -22,4 +26,6 @@ import Pizza from '../../models/pizza.model';
 })
 export class CardComponent {
   @Input() pizza: Pizza | undefined;
+
+  pizzaService = inject(PizzaService)
 }

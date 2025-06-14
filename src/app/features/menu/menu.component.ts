@@ -4,6 +4,7 @@ import Pizza from '../../models/pizza.model';
 
 import { CommonModule } from '@angular/common';
 import { CardComponent } from "../../components/card/pizza-card.component";
+import { PizzaService } from '../../../../services/pizza.service';
 
 @Component({
   selector: 'app-menu',
@@ -15,11 +16,10 @@ import { CardComponent } from "../../components/card/pizza-card.component";
 })
 export class MenuComponent {
   http = inject(HttpClient)
+  pizzaService = inject(PizzaService)
   pizzas: Pizza[] = []
 
   constructor() {
-    this.http.get<Pizza[]>(
-      'https://my-json-server.typicode.com/zoelounge/menupizza/cards'
-    ).subscribe(res => this.pizzas = res);
+    this.pizzaService.getPizzas().subscribe(res => this.pizzas = res)
   }
 }
