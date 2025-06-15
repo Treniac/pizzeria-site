@@ -3,23 +3,25 @@ import { Component, inject } from '@angular/core';
 import Pizza from '../../models/pizza.model';
 
 import { CommonModule } from '@angular/common';
-import { CardComponent } from "../../components/card/pizza-card.component";
+import { CardComponent } from '../../components/card/pizza-card.component';
 import { PizzaService } from '../../../../services/pizza.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
-  imports: [CommonModule, CardComponent],
+  imports: [CommonModule, CardComponent, RouterLink],
   template: `
-    <app-card *ngFor="let pizza of pizzas" [pizza]="pizza"/>
+  <a routerLink="/cart">cart</a>
+    <app-card *ngFor="let pizza of pizzas" [pizza]="pizza" />
   `,
-  styles: ``
+  styles: ``,
 })
 export class MenuComponent {
-  http = inject(HttpClient)
-  pizzaService = inject(PizzaService)
-  pizzas: Pizza[] = []
+  http = inject(HttpClient);
+  pizzaService = inject(PizzaService);
+  pizzas: Pizza[] = [];
 
   constructor() {
-    this.pizzaService.getPizzas().subscribe(res => this.pizzas = res)
+    this.pizzaService.getPizzas().subscribe((res) => (this.pizzas = res));
   }
 }
