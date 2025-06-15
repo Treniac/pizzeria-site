@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { PizzaService } from '../../app/core/services/pizza.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   template: `
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand">Pizza Pazza</a>
+        <a routerLink="/home" class="navbar-brand">PizzAngular</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -21,9 +23,9 @@ import { RouterLink } from '@angular/router';
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link" routerLink="/">Home</a>
-            <a class="nav-link" routerLink="/menu">Menu</a>
-            <a class="nav-link" routerLink="/cart">Cart</a>
+            <a class="nav-link" routerLink="/home">Home</a>
+            <a class="nav-link" routerLink="/menu">Menù</a>
+            <a class="nav-link" [ngClass]="{'disabled': pizzaService.isCartEmpty()}" routerLink="/cart">Carrello</a>
           </div>
         </div>
       </div>
@@ -31,4 +33,6 @@ import { RouterLink } from '@angular/router';
   `,
   styles: ``,
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  pizzaService = inject(PizzaService)
+}

@@ -5,7 +5,6 @@ import Pizza from '../../core/models/pizza.model';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from './pizza-card.component';
 import { PizzaService } from '../../core/services/pizza.service';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-menu',

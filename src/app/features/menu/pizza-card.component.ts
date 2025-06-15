@@ -12,7 +12,6 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-card',
   imports: [CommonModule, RouterLink],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="card" style="width: 18rem;">
       <img
