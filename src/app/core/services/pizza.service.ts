@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import Pizza from '../src/app/models/pizza.model';
+import Pizza from '../models/pizza.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, map } from 'rxjs';
 
@@ -34,5 +34,15 @@ export class PizzaService {
     const selectedPizza = this.pizzas?.find((pizza) => pizza.id === pizzaId);
     if (selectedPizza && selectedPizza.quantity > 0)
       selectedPizza.quantity -= 1;
+  }
+
+  clearPizzas() {
+    if (this.pizzas) this.pizzas.forEach((pizza) => (pizza.quantity = 0));
+  }
+
+  isCartEmpty() {
+    if (this.pizzas) {
+      return this.pizzas.findIndex(pizza => pizza.quantity > 0) === -1;
+    } else return true
   }
 }

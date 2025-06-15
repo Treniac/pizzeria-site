@@ -1,28 +1,42 @@
 import { Component, inject } from '@angular/core';
-import Pizza from '../../models/pizza.model';
-import { PizzaService } from '../../../../services/pizza.service';
+import Pizza from '../../core/models/pizza.model';
+import { PizzaService } from '../../core/services/pizza.service';
 import { CommonModule } from '@angular/common';
-import { CardComponent } from "../../components/card/pizza-card.component";
-import { CartItemComponent } from "../../components/cart-item/cart-item.component";
+import { CartItemComponent } from './cart-item.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule, CartItemComponent],
+  imports: [CommonModule, CartItemComponent, RouterLink],
   template: `
     <ng-container *ngFor="let pizza of pizzas">
-      <app-cart-item *ngIf="pizza.quantity > 0" [pizza]="pizza"/>
+      <app-cart-item *ngIf="pizza.quantity > 0" [pizza]="pizza" />
     </ng-container>
-    <button class="btn btn-primary">Buy</button>
-    <button class="btn btn-danger">Close</button>
+    <div *ngIf="!pizzaService.isCartEmpty()">
+      <button routerLink="/menu" style="width: 100px;" class="btn btn-danger">
+        Close
+      </button>
+      <button
+        routerLink="/menu"
+        style="width: 100px;"
+        class="btn btn-primary"
+        (click)="pizzaService.clearPizzas()"
+      >
+        Buy
+      </button>
+    </div>
+    <p *ngIf="pizzaService.isCartEmpty()">
+      Your cart is empty! Click <a routerLink="/menu">here</a> to return to the
+      menu
+    </p>
   `,
-  styles: ``
+  styles: ``,
 })
 export class CartComponent {
-  pizzas: Pizza[] = []
-  pizzaService = inject(PizzaService)
+  pizzas: Pizza[] = [];
+  pizzaService = inject(PizzaService);
 
   constructor() {
-    this.pizzaService.getPizzas().subscribe(res => this.pizzas = res)
+    this.pizzaService.getPizzas().subscribe((res) => (this.pizzas = res));
   }
-
 }
